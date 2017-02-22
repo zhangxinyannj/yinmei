@@ -345,7 +345,7 @@ public class WorkspaceStateTransitionAnimation {
             }
         }
 
-        final ViewGroup overviewPanel = mLauncher.getOverviewPanel();
+//        final ViewGroup overviewPanel = mLauncher.getOverviewPanel();
         final View hotseat = mLauncher.getHotseat();
         final View pageIndicator = mWorkspace.getPageIndicator();
         if (animated) {
@@ -401,41 +401,41 @@ public class WorkspaceStateTransitionAnimation {
                     .alpha(finalHotseatAndPageIndicatorAlpha);
             hotseatAlpha.addListener(new AlphaUpdateListener(hotseat, accessibilityEnabled));
 
-            LauncherViewPropertyAnimator overviewPanelAlpha =
-                    new LauncherViewPropertyAnimator(overviewPanel).alpha(finalOverviewPanelAlpha);
-            overviewPanelAlpha.addListener(new AlphaUpdateListener(overviewPanel,
-                    accessibilityEnabled));
+//            LauncherViewPropertyAnimator overviewPanelAlpha =
+//                    new LauncherViewPropertyAnimator(overviewPanel).alpha(finalOverviewPanelAlpha);
+//            overviewPanelAlpha.addListener(new AlphaUpdateListener(overviewPanel,
+//                    accessibilityEnabled));
 
             // For animation optimations, we may need to provide the Launcher transition
             // with a set of views on which to force build layers in certain scenarios.
             hotseat.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            overviewPanel.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+//            overviewPanel.setLayerType(View.LAYER_TYPE_HARDWARE, null);
             if (layerViews != null) {
                 // If layerViews is not null, we add these views, and indicate that
                 // the caller can manage layer state.
                 layerViews.put(hotseat, LauncherStateTransitionAnimation.BUILD_AND_SET_LAYER);
-                layerViews.put(overviewPanel, LauncherStateTransitionAnimation.BUILD_AND_SET_LAYER);
+//                layerViews.put(overviewPanel, LauncherStateTransitionAnimation.BUILD_AND_SET_LAYER);
             } else {
                 // Otherwise let the animator handle layer management.
                 hotseatAlpha.withLayer();
-                overviewPanelAlpha.withLayer();
+//                overviewPanelAlpha.withLayer();
             }
 
             if (states.workspaceToOverview) {
                 pageIndicatorAlpha.setInterpolator(new DecelerateInterpolator(2));
                 hotseatAlpha.setInterpolator(new DecelerateInterpolator(2));
-                overviewPanelAlpha.setInterpolator(null);
+//                overviewPanelAlpha.setInterpolator(null);
             } else if (states.overviewToWorkspace) {
                 pageIndicatorAlpha.setInterpolator(null);
                 hotseatAlpha.setInterpolator(null);
-                overviewPanelAlpha.setInterpolator(new DecelerateInterpolator(2));
+//                overviewPanelAlpha.setInterpolator(new DecelerateInterpolator(2));
             }
 
-            overviewPanelAlpha.setDuration(duration);
+//            overviewPanelAlpha.setDuration(duration);
             pageIndicatorAlpha.setDuration(duration);
             hotseatAlpha.setDuration(duration);
 
-            mStateAnimator.play(overviewPanelAlpha);
+//            mStateAnimator.play(overviewPanelAlpha);
             mStateAnimator.play(hotseatAlpha);
             mStateAnimator.play(pageIndicatorAlpha);
             mStateAnimator.addListener(new AnimatorListenerAdapter() {
@@ -443,15 +443,15 @@ public class WorkspaceStateTransitionAnimation {
                 public void onAnimationEnd(Animator animation) {
                     mStateAnimator = null;
 
-                    if (accessibilityEnabled && overviewPanel.getVisibility() == View.VISIBLE) {
-                        overviewPanel.getChildAt(0).performAccessibilityAction(
-                                AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
-                    }
+//                    if (accessibilityEnabled && overviewPanel.getVisibility() == View.VISIBLE) {
+//                        overviewPanel.getChildAt(0).performAccessibilityAction(
+//                                AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+//                    }
                 }
             });
         } else {
-            overviewPanel.setAlpha(finalOverviewPanelAlpha);
-            AlphaUpdateListener.updateVisibility(overviewPanel, accessibilityEnabled);
+//            overviewPanel.setAlpha(finalOverviewPanelAlpha);
+//            AlphaUpdateListener.updateVisibility(overviewPanel, accessibilityEnabled);
             hotseat.setAlpha(finalHotseatAndPageIndicatorAlpha);
             AlphaUpdateListener.updateVisibility(hotseat, accessibilityEnabled);
             if (pageIndicator != null) {
@@ -463,10 +463,10 @@ public class WorkspaceStateTransitionAnimation {
             mWorkspace.setScaleY(mNewScale);
             mWorkspace.setTranslationY(finalWorkspaceTranslationY);
 
-            if (accessibilityEnabled && overviewPanel.getVisibility() == View.VISIBLE) {
-                overviewPanel.getChildAt(0).performAccessibilityAction(
-                        AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
-            }
+//            if (accessibilityEnabled && overviewPanel.getVisibility() == View.VISIBLE) {
+//                overviewPanel.getChildAt(0).performAccessibilityAction(
+//                        AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+//            }
         }
     }
 

@@ -160,18 +160,18 @@ public class LauncherStateTransitionAnimation {
      */
     public void startAnimationToWidgets(final Workspace.State fromWorkspaceState,
             final boolean animated) {
-        final WidgetsContainerView toView = mLauncher.getWidgetsView();
-        final View buttonView = mLauncher.getWidgetsButton();
-
-        PrivateTransitionCallbacks cb = new PrivateTransitionCallbacks() {
-            @Override
-            public float getMaterialRevealViewFinalAlpha(View revealView) {
-                return 0.3f;
-            }
-        };
-        mCurrentAnimation = startAnimationToOverlay(fromWorkspaceState,
-                Workspace.State.OVERVIEW_HIDDEN, buttonView, toView, toView.getContentView(),
-                toView.getRevealView(), null, animated, cb);
+//        final WidgetsContainerView toView = mLauncher.getWidgetsView();
+//        final View buttonView = mLauncher.getWidgetsButton();
+//
+//        PrivateTransitionCallbacks cb = new PrivateTransitionCallbacks() {
+//            @Override
+//            public float getMaterialRevealViewFinalAlpha(View revealView) {
+//                return 0.3f;
+//            }
+//        };
+//        mCurrentAnimation = startAnimationToOverlay(fromWorkspaceState,
+//                Workspace.State.OVERVIEW_HIDDEN, buttonView, toView, toView.getContentView(),
+//                toView.getRevealView(), null, animated, cb);
     }
 
     /**
@@ -452,27 +452,27 @@ public class LauncherStateTransitionAnimation {
     private void startAnimationToWorkspaceFromWidgets(final Workspace.State fromWorkspaceState,
             final Workspace.State toWorkspaceState, final int toWorkspacePage,
             final boolean animated, final Runnable onCompleteRunnable) {
-        final WidgetsContainerView widgetsView = mLauncher.getWidgetsView();
-        PrivateTransitionCallbacks cb = new PrivateTransitionCallbacks() {
-            @Override
-            float getMaterialRevealViewFinalAlpha(View revealView) {
-                return 0.3f;
-            }
-            @Override
-            public AnimatorListenerAdapter getMaterialRevealViewAnimatorListener(
-                    final View revealView, final View widgetsButtonView) {
-                return new AnimatorListenerAdapter() {
-                    public void onAnimationEnd(Animator animation) {
-                        // Hide the reveal view
-                        revealView.setVisibility(View.INVISIBLE);
-                    }
-                };
-            }
-        };
-        mCurrentAnimation = startAnimationToWorkspaceFromOverlay(fromWorkspaceState,
-                toWorkspaceState, toWorkspacePage, mLauncher.getWidgetsButton(), widgetsView,
-                widgetsView.getContentView(), widgetsView.getRevealView(), null, animated,
-                onCompleteRunnable, cb);
+//        final WidgetsContainerView widgetsView = mLauncher.getWidgetsView();
+//        PrivateTransitionCallbacks cb = new PrivateTransitionCallbacks() {
+//            @Override
+//            float getMaterialRevealViewFinalAlpha(View revealView) {
+//                return 0.3f;
+//            }
+//            @Override
+//            public AnimatorListenerAdapter getMaterialRevealViewAnimatorListener(
+//                    final View revealView, final View widgetsButtonView) {
+//                return new AnimatorListenerAdapter() {
+//                    public void onAnimationEnd(Animator animation) {
+//                        // Hide the reveal view
+//                        revealView.setVisibility(View.INVISIBLE);
+//                    }
+//                };
+//            }
+//        };
+//        mCurrentAnimation = startAnimationToWorkspaceFromOverlay(fromWorkspaceState,
+//                toWorkspaceState, toWorkspacePage, mLauncher.getWidgetsButton(), widgetsView,
+//                widgetsView.getContentView(), widgetsView.getRevealView(), null, animated,
+//                onCompleteRunnable, cb);
     }
 
     /**

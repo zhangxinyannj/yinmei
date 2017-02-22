@@ -272,10 +272,10 @@ public class Launcher extends Activity
     private int[] mTmpAddItemCellCoordinates = new int[2];
 
     @Thunk Hotseat mHotseat;
-    private ViewGroup mOverviewPanel;
+//    private ViewGroup mOverviewPanel;
 
     private View mAllAppsButton;
-    private View mWidgetsButton;
+//    private View mWidgetsButton;
 
     private SearchDropTargetBar mSearchDropTargetBar;
 
@@ -283,7 +283,7 @@ public class Launcher extends Activity
     @Thunk AllAppsContainerView mAppsView;
 
     // Main container view and the model for the widget tray screen.
-    @Thunk WidgetsContainerView mWidgetsView;
+//    @Thunk WidgetsContainerView mWidgetsView;
     @Thunk WidgetsModel mWidgetsModel;
 
     private boolean mAutoAdvanceRunning = false;
@@ -551,13 +551,13 @@ public class Launcher extends Activity
 
         if (mLauncherCallbacks != null) {
             mLauncherCallbacks.onCreate(savedInstanceState);
-            if (mLauncherCallbacks.hasLauncherOverlay()) {
-                ViewStub stub = (ViewStub) findViewById(R.id.launcher_overlay_stub);
-                mLauncherOverlayContainer = (InsettableFrameLayout) stub.inflate();
-                mLauncherOverlay = mLauncherCallbacks.setLauncherOverlayView(
-                        mLauncherOverlayContainer, mLauncherOverlayCallbacks);
-                mWorkspace.setLauncherOverlay(mLauncherOverlay);
-            }
+//            if (mLauncherCallbacks.hasLauncherOverlay()) {
+//                ViewStub stub = (ViewStub) findViewById(R.id.launcher_overlay_stub);
+//                mLauncherOverlayContainer = (InsettableFrameLayout) stub.inflate();
+//                mLauncherOverlay = mLauncherCallbacks.setLauncherOverlayView(
+//                        mLauncherOverlayContainer, mLauncherOverlayCallbacks);
+//                mWorkspace.setLauncherOverlay(mLauncherOverlay);
+//            }
         }
 
         if (shouldShowIntroScreen()) {
@@ -655,7 +655,7 @@ public class Launcher extends Activity
      */
     public void updateOverlayBounds(Rect newBounds) {
         mAppsView.setSearchBarBounds(newBounds);
-        mWidgetsView.setSearchBarBounds(newBounds);
+//        mWidgetsView.setSearchBarBounds(newBounds);
     }
 
     /** To be overridden by subclasses to hint to Launcher that we have custom content */
@@ -1068,7 +1068,7 @@ public class Launcher extends Activity
             showAppsView(false /* animated */, false /* resetListToTop */,
                     !launchedFromApp /* updatePredictedApps */, false /* focusSearchBar */);
         } else if (mOnResumeState == State.WIDGETS) {
-            showWidgetsView(false, false);
+//            showWidgetsView(false, false);
         }
         mOnResumeState = State.NONE;
 
@@ -1451,45 +1451,45 @@ public class Launcher extends Activity
             mHotseat.setOnLongClickListener(this);
         }
 
-        mOverviewPanel = (ViewGroup) findViewById(R.id.overview_panel);
-        mWidgetsButton = findViewById(R.id.widget_button);
-        mWidgetsButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (!mWorkspace.isSwitchingState()) {
-                    onClickAddWidgetButton(arg0);
-                }
-            }
-        });
-        mWidgetsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+//        mOverviewPanel = (ViewGroup) findViewById(R.id.overview_panel);
+//        mWidgetsButton = findViewById(R.id.widget_button);
+//        mWidgetsButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
+//                if (!mWorkspace.isSwitchingState()) {
+//                    onClickAddWidgetButton(arg0);
+//                }
+//            }
+//        });
+//        mWidgetsButton.setOnTouchListener(getHapticFeedbackTouchListener());
 
-        View wallpaperButton = findViewById(R.id.wallpaper_button);
-        wallpaperButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (!mWorkspace.isSwitchingState()) {
-                    onClickWallpaperPicker(arg0);
-                }
-            }
-        });
-        wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
+//        View wallpaperButton = findViewById(R.id.wallpaper_button);
+//        wallpaperButton.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
+//                if (!mWorkspace.isSwitchingState()) {
+//                    onClickWallpaperPicker(arg0);
+//                }
+//            }
+//        });
+//        wallpaperButton.setOnTouchListener(getHapticFeedbackTouchListener());
+//
+//        View settingsButton = findViewById(R.id.settings_button);
+//        if (hasSettings()) {
+//            settingsButton.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View arg0) {
+//                    if (!mWorkspace.isSwitchingState()) {
+//                        onClickSettingsButton(arg0);
+//                    }
+//                }
+//            });
+//            settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
+//        } else {
+//            settingsButton.setVisibility(View.GONE);
+//        }
 
-        View settingsButton = findViewById(R.id.settings_button);
-        if (hasSettings()) {
-            settingsButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View arg0) {
-                    if (!mWorkspace.isSwitchingState()) {
-                        onClickSettingsButton(arg0);
-                    }
-                }
-            });
-            settingsButton.setOnTouchListener(getHapticFeedbackTouchListener());
-        } else {
-            settingsButton.setVisibility(View.GONE);
-        }
-
-        mOverviewPanel.setAlpha(0f);
+//        mOverviewPanel.setAlpha(0f);
 
         // Setup the workspace
         mWorkspace.setHapticFeedbackEnabled(false);
@@ -1503,7 +1503,7 @@ public class Launcher extends Activity
 
         // Setup Apps and Widgets
         mAppsView = (AllAppsContainerView) findViewById(R.id.apps_view);
-        mWidgetsView = (WidgetsContainerView) findViewById(R.id.widgets_view);
+//        mWidgetsView = (WidgetsContainerView) findViewById(R.id.widgets_view);
         if (mLauncherCallbacks != null && mLauncherCallbacks.getAllAppsSearchBarController() != null) {
             mAppsView.setSearchBarController(mLauncherCallbacks.getAllAppsSearchBarController());
         } else {
@@ -1547,9 +1547,9 @@ public class Launcher extends Activity
         return mAllAppsButton;
     }
 
-    public View getWidgetsButton() {
-        return mWidgetsButton;
-    }
+//    public View getWidgetsButton() {
+//        return mWidgetsButton;
+//    }
 
     /**
      * Creates a view representing a shortcut.
@@ -1695,7 +1695,11 @@ public class Launcher extends Activity
 
                 // Reset AllApps to its initial state only if we are not in the middle of
                 // processing a multi-step drop
-                if (mAppsView != null && mWidgetsView != null &&
+//                if (mAppsView != null && mWidgetsView != null &&
+//                        mPendingAddInfo.container == ItemInfo.NO_ID) {
+//                    showWorkspace(false);
+//                }
+                if (mAppsView != null &&
                         mPendingAddInfo.container == ItemInfo.NO_ID) {
                     showWorkspace(false);
                 }
@@ -1892,9 +1896,9 @@ public class Launcher extends Activity
         return mAppsView;
     }
 
-    public WidgetsContainerView getWidgetsView() {
-        return mWidgetsView;
-    }
+//    public WidgetsContainerView getWidgetsView() {
+//        return mWidgetsView;
+//    }
 
     public Workspace getWorkspace() {
         return mWorkspace;
@@ -1904,9 +1908,9 @@ public class Launcher extends Activity
         return mHotseat;
     }
 
-    public ViewGroup getOverviewPanel() {
-        return mOverviewPanel;
-    }
+//    public ViewGroup getOverviewPanel() {
+//        return mOverviewPanel;
+//    }
 
     public SearchDropTargetBar getSearchDropTargetBar() {
         return mSearchDropTargetBar;
@@ -1984,9 +1988,9 @@ public class Launcher extends Activity
             }
 
             // Reset the widgets view
-            if (!alreadyOnHome && mWidgetsView != null) {
-                mWidgetsView.scrollToTop();
-            }
+//            if (!alreadyOnHome && mWidgetsView != null) {
+//                mWidgetsView.scrollToTop();
+//            }
 
             if (mLauncherCallbacks != null) {
                 mLauncherCallbacks.onHomeIntent();
@@ -2812,15 +2816,15 @@ public class Launcher extends Activity
      * on the home screen.
      */
     protected void onClickAddWidgetButton(View view) {
-        if (LOGD) Log.d(TAG, "onClickAddWidgetButton");
-        if (mIsSafeModeEnabled) {
-            Toast.makeText(this, R.string.safemode_widget_error, Toast.LENGTH_SHORT).show();
-        } else {
-            showWidgetsView(true /* animated */, true /* resetPageToZero */);
-            if (mLauncherCallbacks != null) {
-                mLauncherCallbacks.onClickAddWidgetButton(view);
-            }
-        }
+//        if (LOGD) Log.d(TAG, "onClickAddWidgetButton");
+//        if (mIsSafeModeEnabled) {
+//            Toast.makeText(this, R.string.safemode_widget_error, Toast.LENGTH_SHORT).show();
+//        } else {
+//            showWidgetsView(true /* animated */, true /* resetPageToZero */);
+//            if (mLauncherCallbacks != null) {
+//                mLauncherCallbacks.onClickAddWidgetButton(view);
+//            }
+//        }
     }
 
     /**
@@ -3273,18 +3277,19 @@ public class Launcher extends Activity
         }
 
         if (v instanceof Workspace) {
-            if (!mWorkspace.isInOverviewMode()) {
-                if (!mWorkspace.isTouchActive()) {
-                    showOverviewMode(true);
-                    mWorkspace.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS,
-                            HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+//            if (!mWorkspace.isInOverviewMode()) {
+//                if (!mWorkspace.isTouchActive()) {
+//                    showOverviewMode(true);
+//                    mWorkspace.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS,
+//                            HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+//                    return true;
+//                } else {
+//                    return false;
+//                }
+//            } else {
+//                return false;
+//            }
+            return true;
         }
 
         CellLayout.CellInfo longClickCellInfo = null;
@@ -3464,20 +3469,20 @@ public class Launcher extends Activity
     /**
      * Shows the widgets view.
      */
-    void showWidgetsView(boolean animated, boolean resetPageToZero) {
-        if (LOGD) Log.d(TAG, "showWidgetsView:" + animated + " resetPageToZero:" + resetPageToZero);
-        if (resetPageToZero) {
-            mWidgetsView.scrollToTop();
-        }
-        showAppsOrWidgets(State.WIDGETS, animated, false);
-
-        mWidgetsView.post(new Runnable() {
-            @Override
-            public void run() {
-                mWidgetsView.requestFocus();
-            }
-        });
-    }
+//    void showWidgetsView(boolean animated, boolean resetPageToZero) {
+//        if (LOGD) Log.d(TAG, "showWidgetsView:" + animated + " resetPageToZero:" + resetPageToZero);
+//        if (resetPageToZero) {
+//            mWidgetsView.scrollToTop();
+//        }
+//        showAppsOrWidgets(State.WIDGETS, animated, false);
+//
+//        mWidgetsView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mWidgetsView.requestFocus();
+//            }
+//        });
+//    }
 
     /**
      * Sets up the transition to show the apps/widgets view.
@@ -3555,7 +3560,7 @@ public class Launcher extends Activity
                     // Before we show workspace, hide all apps again because
                     // exitSpringLoadedDragMode made it visible. This is a bit hacky; we should
                     // clean up our state transition functions
-                    mWidgetsView.setVisibility(View.GONE);
+//                    mWidgetsView.setVisibility(View.GONE);
                     showWorkspace(true, onCompleteRunnable);
                 } else {
                     exitSpringLoadedDragMode();
@@ -3569,7 +3574,7 @@ public class Launcher extends Activity
             showAppsView(true /* animated */, false /* resetListToTop */,
                     false /* updatePredictedApps */, false /* focusSearchBar */);
         } else if (mState == State.WIDGETS_SPRING_LOADED) {
-            showWidgetsView(true, false);
+//            showWidgetsView(true, false);
         }
     }
 
@@ -4418,10 +4423,10 @@ public class Launcher extends Activity
             return;
         }
 
-        if (mWidgetsView != null && model != null) {
-            mWidgetsView.addWidgets(model);
-            mWidgetsModel = null;
-        }
+//        if (mWidgetsView != null && model != null) {
+//            mWidgetsView.addWidgets(model);
+//            mWidgetsModel = null;
+//        }
     }
 
     private int mapConfigurationOriActivityInfoOri(int configOri) {
