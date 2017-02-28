@@ -299,7 +299,7 @@ public class FocusHelper {
         final Workspace workspace = (Workspace) iconLayout.getParent();
         final ViewGroup dragLayer = (ViewGroup) workspace.getParent();
         final ViewGroup tabs = (ViewGroup) dragLayer.findViewById(R.id.search_drop_target_bar);
-        final Hotseat hotseat = (Hotseat) dragLayer.findViewById(R.id.hotseat);
+//        final Hotseat hotseat = (Hotseat) dragLayer.findViewById(R.id.hotseat);
 
         final int iconIndex = parent.indexOfChild(v);
         final int pageIndex = workspace.indexOfChild(iconLayout);
@@ -307,24 +307,24 @@ public class FocusHelper {
         int countX = iconLayout.getCountX();
         int countY = iconLayout.getCountY();
 
-        CellLayout hotseatLayout = (CellLayout) hotseat.getChildAt(0);
-        ShortcutAndWidgetContainer hotseatParent = hotseatLayout.getShortcutsAndWidgets();
+//        CellLayout hotseatLayout = (CellLayout) hotseat.getChildAt(0);
+//        ShortcutAndWidgetContainer hotseatParent = hotseatLayout.getShortcutsAndWidgets();
         int[][] matrix;
 
         // KEYCODE_DPAD_DOWN in portrait (KEYCODE_DPAD_RIGHT in landscape) is the only key allowed
         // to take a user to the hotseat. For other dpad navigation, do not use the matrix extended
         // with the hotseat.
         if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN && !profile.isVerticalBarLayout()) {
-            matrix = FocusLogic.createSparseMatrix(iconLayout, hotseatLayout, true /* horizontal */,
-                    profile.inv.hotseatAllAppsRank,
-                    !hotseat.hasIcons() /* ignore all apps icon, unless there are no other icons */);
-            countY = countY + 1;
+//            matrix = FocusLogic.createSparseMatrix(iconLayout, hotseatLayout, true /* horizontal */,
+//                    profile.inv.hotseatAllAppsRank,
+//                    !hotseat.hasIcons() /* ignore all apps icon, unless there are no other icons */);
+//            countY = countY + 1;
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT &&
                 profile.isVerticalBarLayout()) {
-            matrix = FocusLogic.createSparseMatrix(iconLayout, hotseatLayout, false /* horizontal */,
-                    profile.inv.hotseatAllAppsRank,
-                    !hotseat.hasIcons() /* ignore all apps icon, unless there are no other icons */);
-            countX = countX + 1;
+//            matrix = FocusLogic.createSparseMatrix(iconLayout, hotseatLayout, false /* horizontal */,
+//                    profile.inv.hotseatAllAppsRank,
+//                    !hotseat.hasIcons() /* ignore all apps icon, unless there are no other icons */);
+//            countX = countX + 1;
         } else if (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_FORWARD_DEL) {
             workspace.removeWorkspaceItem(v);
             return consume;
@@ -333,8 +333,9 @@ public class FocusHelper {
         }
 
         // Process the focus.
-        int newIconIndex = FocusLogic.handleKeyEvent(keyCode, countX,
-                countY, matrix, iconIndex, pageIndex, pageCount, Utilities.isRtl(v.getResources()));
+//        int newIconIndex = FocusLogic.handleKeyEvent(keyCode, countX,
+//                countY, matrix, iconIndex, pageIndex, pageCount, Utilities.isRtl(v.getResources()));
+        int newIconIndex = 0;
         View newIcon = null;
         switch (newIconIndex) {
             case FocusLogic.NOOP:
@@ -404,12 +405,12 @@ public class FocusHelper {
                 break;
             default:
                 // current page, some item.
-                if (0 <= newIconIndex && newIconIndex < parent.getChildCount()) {
-                    newIcon = parent.getChildAt(newIconIndex);
-                } else if (parent.getChildCount() <= newIconIndex &&
-                        newIconIndex < parent.getChildCount() + hotseatParent.getChildCount()) {
-                    newIcon = hotseatParent.getChildAt(newIconIndex - parent.getChildCount());
-                }
+//                if (0 <= newIconIndex && newIconIndex < parent.getChildCount()) {
+//                    newIcon = parent.getChildAt(newIconIndex);
+//                } else if (parent.getChildCount() <= newIconIndex &&
+//                        newIconIndex < parent.getChildCount() + hotseatParent.getChildCount()) {
+//                    newIcon = hotseatParent.getChildAt(newIconIndex - parent.getChildCount());
+//                }
                 break;
         }
         if (newIcon != null) {

@@ -311,9 +311,11 @@ public class DeviceProfile {
             } else {
                 // Pad the top and bottom of the workspace with search/hotseat bar sizes
                 padding.set(desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.left,
-                        searchBarBounds.bottom,
+//                        searchBarBounds.bottom,
+                        5,
                         desiredWorkspaceLeftRightMarginPx - defaultWidgetPadding.right,
-                        hotseatBarHeightPx + pageIndicatorHeightPx);
+//                        hotseatBarHeightPx + pageIndicatorHeightPx);
+                        pageIndicatorHeightPx);
             }
         }
         return padding;
@@ -418,33 +420,33 @@ public class DeviceProfile {
         workspace.setPageSpacing(getWorkspacePageSpacing(isLayoutRtl));
 
         // Layout the hotseat
-        View hotseat = launcher.findViewById(R.id.hotseat);
-        lp = (FrameLayout.LayoutParams) hotseat.getLayoutParams();
-        if (hasVerticalBarLayout) {
-            // Vertical hotseat -- The hotseat is fixed in the layout to be on the right of the
-            //                     screen regardless of RTL
-            lp.gravity = Gravity.RIGHT;
-            lp.width = hotseatBarHeightPx;
-            lp.height = LayoutParams.MATCH_PARENT;
-            hotseat.findViewById(R.id.layout).setPadding(0, 2 * edgeMarginPx, 0, 2 * edgeMarginPx);
-        } else if (isTablet) {
-            // Pad the hotseat with the workspace padding calculated above
-            lp.gravity = Gravity.BOTTOM;
-            lp.width = LayoutParams.MATCH_PARENT;
-            lp.height = hotseatBarHeightPx;
-            hotseat.setPadding(edgeMarginPx + padding.left, 0,
-                    edgeMarginPx + padding.right,
-                    2 * edgeMarginPx);
-        } else {
-            // For phones, layout the hotseat without any bottom margin
-            // to ensure that we have space for the folders
-            lp.gravity = Gravity.BOTTOM;
-            lp.width = LayoutParams.MATCH_PARENT;
-            lp.height = hotseatBarHeightPx;
-            hotseat.findViewById(R.id.layout).setPadding(2 * edgeMarginPx, 0,
-                    2 * edgeMarginPx, 0);
-        }
-        hotseat.setLayoutParams(lp);
+//        View hotseat = launcher.findViewById(R.id.hotseat);
+//        lp = (FrameLayout.LayoutParams) hotseat.getLayoutParams();
+//        if (hasVerticalBarLayout) {
+//            // Vertical hotseat -- The hotseat is fixed in the layout to be on the right of the
+//            //                     screen regardless of RTL
+//            lp.gravity = Gravity.RIGHT;
+//            lp.width = hotseatBarHeightPx;
+//            lp.height = LayoutParams.MATCH_PARENT;
+//            hotseat.findViewById(R.id.layout).setPadding(0, 2 * edgeMarginPx, 0, 2 * edgeMarginPx);
+//        } else if (isTablet) {
+//            // Pad the hotseat with the workspace padding calculated above
+//            lp.gravity = Gravity.BOTTOM;
+//            lp.width = LayoutParams.MATCH_PARENT;
+//            lp.height = hotseatBarHeightPx;
+//            hotseat.setPadding(edgeMarginPx + padding.left, 0,
+//                    edgeMarginPx + padding.right,
+//                    2 * edgeMarginPx);
+//        } else {
+//            // For phones, layout the hotseat without any bottom margin
+//            // to ensure that we have space for the folders
+//            lp.gravity = Gravity.BOTTOM;
+//            lp.width = LayoutParams.MATCH_PARENT;
+//            lp.height = hotseatBarHeightPx;
+//            hotseat.findViewById(R.id.layout).setPadding(2 * edgeMarginPx, 0,
+//                    2 * edgeMarginPx, 0);
+//        }
+//        hotseat.setLayoutParams(lp);
 
         // Layout the page indicators
         View pageIndicator = launcher.findViewById(R.id.page_indicator);
@@ -458,7 +460,8 @@ public class DeviceProfile {
                 lp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
                 lp.width = LayoutParams.WRAP_CONTENT;
                 lp.height = LayoutParams.WRAP_CONTENT;
-                lp.bottomMargin = hotseatBarHeightPx;
+//                lp.bottomMargin = hotseatBarHeightPx;
+                lp.bottomMargin = 0;
                 pageIndicator.setLayoutParams(lp);
             }
         }

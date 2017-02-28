@@ -45,10 +45,10 @@
         </com.android.launcher3.Workspace>
 
         <!-- DO NOT CHANGE THE ID -->
-        <include layout="@layout/hotseat"
-            android:id="@+id/hotseat"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <!--<include layout="@layout/hotseat"-->
+            <!--android:id="@+id/hotseat"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
 
         <!--<include layout="@layout/overview_panel"-->
             <!--android:id="@+id/overview_panel"-->

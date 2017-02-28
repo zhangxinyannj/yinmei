@@ -58,6 +58,12 @@ public class InvariantDeviceProfile {
     public int numColumns;
 
     /**
+     * icons Gap.
+     */
+    public int widthGap;
+    public int heightGap;
+
+    /**
      * The minimum number of predicted apps in all apps.
      */
     int minAllAppsPredictionColumns;
@@ -90,12 +96,13 @@ public class InvariantDeviceProfile {
 
     public InvariantDeviceProfile(InvariantDeviceProfile p) {
         this(p.name, p.minWidthDps, p.minHeightDps, p.numRows, p.numColumns,
+                p.widthGap, p.heightGap,
                 p.numFolderRows, p.numFolderColumns, p.minAllAppsPredictionColumns,
                 p.iconSize, p.iconTextSize, p.numHotseatIcons, p.hotseatIconSize,
                 p.defaultLayoutId);
     }
 
-    InvariantDeviceProfile(String n, float w, float h, int r, int c, int fr, int fc, int maapc,
+    InvariantDeviceProfile(String n, float w, float h, int r, int c, int wg, int hg, int fr, int fc, int maapc,
             float is, float its, float hs, float his, int dlId) {
         // Ensure that we have an odd number of hotseat items (since we need to place all apps)
         if (hs % 2 == 0) {
@@ -107,6 +114,8 @@ public class InvariantDeviceProfile {
         minHeightDps = h;
         numRows = r;
         numColumns = c;
+        widthGap = wg;
+        heightGap = hg;
         numFolderRows = fr;
         numFolderColumns = fc;
         minAllAppsPredictionColumns = maapc;
@@ -132,6 +141,7 @@ public class InvariantDeviceProfile {
         // This guarantees that width < height
         minWidthDps = Utilities.dpiFromPx(Math.min(smallestSize.x, smallestSize.y), dm);
         minHeightDps = Utilities.dpiFromPx(Math.min(largestSize.x, largestSize.y), dm);
+        android.util.Log.i("zxy", "minW:" + minWidthDps + "minH: " + minHeightDps);
 
         ArrayList<InvariantDeviceProfile> closestProfiles =
                 findClosestDeviceProfiles(minWidthDps, minHeightDps, getPredefinedDeviceProfiles());
@@ -141,6 +151,8 @@ public class InvariantDeviceProfile {
         InvariantDeviceProfile closestProfile = closestProfiles.get(0);
         numRows = closestProfile.numRows;
         numColumns = closestProfile.numColumns;
+        widthGap = closestProfile.widthGap;
+        heightGap = closestProfile.heightGap;
         numHotseatIcons = closestProfile.numHotseatIcons;
         hotseatAllAppsRank = (int) (numHotseatIcons / 2);
         defaultLayoutId = closestProfile.defaultLayoutId;
@@ -171,6 +183,12 @@ public class InvariantDeviceProfile {
                 smallSide, largeSide, false /* isLandscape */);
     }
 
+    InvariantDeviceProfile getElderDeviceProfiles() {
+        InvariantDeviceProfile deviceProfile = new InvariantDeviceProfile("Elder",
+                0, 0, 4, 2, 6, 6, 6, 2, 0, 48, 13, 0, 0, R.xml.default_workspace_4x2);
+        return deviceProfile;
+    }
+
     ArrayList<InvariantDeviceProfile> getPredefinedDeviceProfiles() {
         ArrayList<InvariantDeviceProfile> predefinedDeviceProfiles = new ArrayList<>();
         // width, height, #rows, #columns, #folder rows, #folder columns,
@@ -183,30 +201,30 @@ public class InvariantDeviceProfile {
         }
 
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Super Short Stubby",
-                255, 300,     2, 3, 2, 3, 3, 48, 13, 3, 48, fourByFourDefaultLayout));
+                255, 300,     2, 3, 6, 6, 2, 3, 3, 48, 13, 3, 48, fourByFourDefaultLayout));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Shorter Stubby",
-                255, 400,     3, 3, 3, 3, 3, 48, 13, 3, 48, fourByFourDefaultLayout));
+                255, 400,     3, 3, 6, 6, 3, 3, 3, 48, 13, 3, 48, fourByFourDefaultLayout));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Short Stubby",
-                275, 420,     3, 4, 3, 4, 4, 48, 13, 5, 48, fourByFourDefaultLayout));
+                275, 420,     3, 4, 6, 6, 3, 4, 4, 48, 13, 5, 48, fourByFourDefaultLayout));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Stubby",
-                255, 450,     3, 4, 3, 4, 4, 48, 13, 5, 48, fourByFourDefaultLayout));
+                255, 450,     3, 4, 6, 6, 3, 4, 4, 48, 13, 5, 48, fourByFourDefaultLayout));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Nexus S",
-                296, 491.33f, 4, 4, 4, 4, 4, 48, 13, 5, 48, fourByFourDefaultLayout));
+                296, 491.33f, 4, 4, 6, 6, 4, 4, 4, 48, 13, 5, 48, fourByFourDefaultLayout));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Nexus 4",
-                335, 567,     4, 4, 4, 4, 4, DEFAULT_ICON_SIZE_DP, 13, 5, 56, fourByFourDefaultLayout));
+                335, 567,     4, 2, 8, 8, 4, 4, 4, DEFAULT_ICON_SIZE_DP, /*13*/26, 5, 56, fourByFourDefaultLayout));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Nexus 5",
-                359, 567,     4, 4, 4, 4, 4, DEFAULT_ICON_SIZE_DP, 13, 5, 56, fourByFourDefaultLayout));
+                359, 567,     4, 4, 6, 6, 4, 4, 4, DEFAULT_ICON_SIZE_DP, 13, 5, 56, fourByFourDefaultLayout));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Large Phone",
-                406, 694,     5, 5, 4, 4, 4, 64, 14.4f,  5, 56, R.xml.default_workspace_5x5));
+                406, 694,     5, 5, 6, 6, 4, 4, 4, 64, 14.4f,  5, 56, R.xml.default_workspace_5x5));
         // The tablet profile is odd in that the landscape orientation
         // also includes the nav bar on the side
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Nexus 7",
-                575, 904,     5, 6, 4, 5, 4, 72, 14.4f,  7, 60, R.xml.default_workspace_5x6));
+                575, 904,     5, 6, 6, 6, 4, 5, 4, 72, 14.4f,  7, 60, R.xml.default_workspace_5x6));
         // Larger tablet profiles always have system bars on the top & bottom
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("Nexus 10",
-                727, 1207,    5, 6, 4, 5, 4, 76, 14.4f,  7, 64, R.xml.default_workspace_5x6));
+                727, 1207,    5, 6, 6, 6, 4, 5, 4, 76, 14.4f,  7, 64, R.xml.default_workspace_5x6));
         predefinedDeviceProfiles.add(new InvariantDeviceProfile("20-inch Tablet",
-                1527, 2527,   7, 7, 6, 6, 4, 100, 20,  7, 72, fourByFourDefaultLayout));
+                1527, 2527,   7, 7, 6, 6, 6, 6, 4, 100, 20,  7, 72, fourByFourDefaultLayout));
 
         return predefinedDeviceProfiles;
     }

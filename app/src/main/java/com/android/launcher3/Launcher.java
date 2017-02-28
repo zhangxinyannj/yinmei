@@ -1446,10 +1446,10 @@ public class Launcher extends Activity
         mDragLayer.setup(this, dragController);
 
         // Setup the hotseat
-        mHotseat = (Hotseat) findViewById(R.id.hotseat);
-        if (mHotseat != null) {
-            mHotseat.setOnLongClickListener(this);
-        }
+//        mHotseat = (Hotseat) findViewById(R.id.hotseat);
+//        if (mHotseat != null) {
+//            mHotseat.setOnLongClickListener(this);
+//        }
 
 //        mOverviewPanel = (ViewGroup) findViewById(R.id.overview_panel);
 //        mWidgetsButton = findViewById(R.id.widget_button);
@@ -1540,7 +1540,7 @@ public class Launcher extends Activity
      * Sets the all apps button. This method is called from {@link Hotseat}.
      */
     public void setAllAppsButton(View allAppsButton) {
-        mAllAppsButton = allAppsButton;
+        //mAllAppsButton = allAppsButton;
     }
 
     public View getAllAppsButton() {
@@ -1622,7 +1622,8 @@ public class Launcher extends Activity
         }
 
         if (!foundCellSpan) {
-            showOutOfSpaceMessage(isHotseatLayout(layout));
+//            showOutOfSpaceMessage(isHotseatLayout(layout));
+            showOutOfSpaceMessage(false);
             return;
         }
 
@@ -1905,7 +1906,8 @@ public class Launcher extends Activity
     }
 
     public Hotseat getHotseat() {
-        return mHotseat;
+//        return mHotseat;
+        return null;
     }
 
 //    public ViewGroup getOverviewPanel() {
@@ -3303,7 +3305,8 @@ public class Launcher extends Activity
 
         // The hotseat touch handling does not go through Workspace, and we always allow long press
         // on hotseat items.
-        final boolean inHotseat = isHotseatLayout(v);
+//        final boolean inHotseat = isHotseatLayout(v);
+        final boolean isHotseat = false;
         if (!mDragController.isDragging()) {
             if (itemUnderLongClick == null) {
                 // User long pressed on empty space
@@ -3315,10 +3318,11 @@ public class Launcher extends Activity
                     showOverviewMode(true);
                 }
             } else {
-                final boolean isAllAppsButton = inHotseat && isAllAppsButtonRank(
-                        mHotseat.getOrderInHotseat(
-                                longClickCellInfo.cellX,
-                                longClickCellInfo.cellY));
+//                final boolean isAllAppsButton = inHotseat && isAllAppsButtonRank(
+//                        mHotseat.getOrderInHotseat(
+//                                longClickCellInfo.cellX,
+//                                longClickCellInfo.cellY));
+                final boolean isAllAppsButton = false;
                 if (!(itemUnderLongClick instanceof Folder || isAllAppsButton)) {
                     // User long pressed on an item
                     mWorkspace.startDrag(longClickCellInfo);
@@ -3329,8 +3333,9 @@ public class Launcher extends Activity
     }
 
     boolean isHotseatLayout(View layout) {
-        return mHotseat != null && layout != null &&
-                (layout instanceof CellLayout) && (layout == mHotseat.getLayout());
+//        return mHotseat != null && layout != null &&
+//                (layout instanceof CellLayout) && (layout == mHotseat.getLayout());
+        return false;
     }
 
     /**
@@ -3338,11 +3343,12 @@ public class Launcher extends Activity
      */
     public CellLayout getCellLayout(long container, long screenId) {
         if (container == LauncherSettings.Favorites.CONTAINER_HOTSEAT) {
-            if (mHotseat != null) {
-                return mHotseat.getLayout();
-            } else {
-                return null;
-            }
+//            if (mHotseat != null) {
+//                return mHotseat.getLayout();
+//            } else {
+//                return null;
+//            }
+            return null;
         } else {
             return mWorkspace.getScreenWithId(screenId);
         }
@@ -3805,6 +3811,32 @@ public class Launcher extends Activity
             mWorkspace.createCustomContentContainer();
             populateCustomContentContainer();
         }
+
+        //添加AllApps Button
+        CellLayout content = (CellLayout) mWorkspace.getPageAt(mWorkspace.getCurrentPage());
+
+        TextView allAppsButton = (TextView)
+                mInflater.inflate(R.layout.all_apps_button, content, false);
+        Drawable d = getResources().getDrawable(R.drawable.all_apps_button_icon);
+        resizeIconDrawable(d);
+        allAppsButton.setCompoundDrawables(null, d, null, null);
+        allAppsButton.setContentDescription(getString(R.string.all_apps_button_label));
+        allAppsButton.setText(R.string.all_apps_button_label);
+        allAppsButton.setOnClickListener(this);
+        mAllAppsButton = allAppsButton;
+
+        CellLayout.LayoutParams lp = new CellLayout.LayoutParams(1,3,1,1);
+        lp.canReorder = false;
+        content.addViewToCellLayout(allAppsButton, -1, allAppsButton.getId(), lp, true);
+
+        //添加TopView
+        CellLayout topBarContent = (CellLayout) mWorkspace.getPageAt(mWorkspace.getCurrentPage());
+        TimeTopBar timeTopBar = (TimeTopBar)
+                mInflater.inflate(R.layout.time_top_bar, topBarContent, false);
+
+        CellLayout.LayoutParams toplp = new CellLayout.LayoutParams(0,0,2,1);
+        toplp.canReorder = false;
+        topBarContent.addViewToCellLayout(timeTopBar, -1, timeTopBar.getId(), toplp, true);
     }
 
     @Override

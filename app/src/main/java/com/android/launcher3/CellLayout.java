@@ -193,6 +193,10 @@ public class CellLayout extends ViewGroup implements BubbleTextShadowHandler {
         mFixedCellWidth = mFixedCellHeight = -1;
         mWidthGap = mOriginalWidthGap = 0;
         mHeightGap = mOriginalHeightGap = 0;
+        //设置icon Gap
+        mWidthGap = (int) grid.inv.widthGap;
+        mHeightGap = (int) grid.inv.heightGap;
+
         mMaxGap = Integer.MAX_VALUE;
         mCountX = (int) grid.inv.numColumns;
         mCountY = (int) grid.inv.numRows;
