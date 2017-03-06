@@ -75,23 +75,38 @@
         <!--<favorite launcher:uri="#Intent;action=android.intent.action.CAMERA_BUTTON;end" />-->
     <!--</resolve>-->
 
-    <!-- Bottom row -->
-    <resolve
-        launcher:screen="0"
-        launcher:x="0"
-        launcher:y="3" >
-        <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_EMAIL;end" />
-        <favorite launcher:uri="mailto:" />
-    </resolve>
 
     <resolve
         launcher:screen="0"
         launcher:x="1"
-        launcher:y="3" >
+        launcher:y="2" >
         <favorite launcher:uri="#Intent;action=android.intent.action.MAIN;category=android.intent.category.APP_GALLERY;end" />
         <favorite launcher:uri="#Intent;type=images/*;end" />
     </resolve>
 
+    <folder
+        launcher:title="@string/friends_contacts_folder_label"
+        launcher:screen="0"
+        launcher:x="0"
+        launcher:y="1"
+        launcher:includeAddIcon="1">
+        <favorite
+            launcher:packageName="com.android.settings"
+            launcher:className="com.android.settings.Settings" />
+    </folder>
+
+    <folder
+        launcher:title="@string/family_contacts_folder_label"
+        launcher:screen="0"
+        launcher:x="1"
+        launcher:y="1">
+        <favorite
+            launcher:packageName="com.android.settings"
+            launcher:className="com.android.settings.Settings" />
+        <favorite
+            launcher:packageName="com.android.settings"
+            launcher:className="com.android.settings.Settings" />
+    </folder>
     <!--<resolve-->
         <!--launcher:screen="0"-->
         <!--launcher:x="3"-->

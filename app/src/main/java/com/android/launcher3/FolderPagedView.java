@@ -18,6 +18,7 @@ package com.android.launcher3;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -208,6 +209,20 @@ public class FolderPagedView extends PagedView {
 
     @SuppressLint("InflateParams")
     public View createNewView(ShortcutInfo item) {
+        if (item instanceof TobeAddedIconInfo) {
+            BubbleTextView tobeAddedIcon = (BubbleTextView) mInflater.inflate(R.layout.tobe_added_icon, null, false);
+            Drawable d = getResources().getDrawable(R.drawable.tobe_added_icon);
+            d.setBounds(0, 0, 200, 200);
+            tobeAddedIcon.setCompoundDrawables(null, d, null, null);
+            tobeAddedIcon.setText(R.string.tobe_added_icon_label);
+            tobeAddedIcon.setAlpha(0.5f);
+            tobeAddedIcon.setOnClickListener(mFolder);
+            tobeAddedIcon.setLayoutParams(new CellLayout.LayoutParams(
+                    item.cellX, item.cellY, item.spanX, item.spanY));
+            tobeAddedIcon.setTag(item);
+            return tobeAddedIcon;
+        }
+
         final BubbleTextView textView = (BubbleTextView) mInflater.inflate(
                 R.layout.folder_application, null, false);
         textView.applyFromShortcutInfo(item, mIconCache);

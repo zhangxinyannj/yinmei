@@ -47,6 +47,11 @@ public class FolderInfo extends ItemInfo {
     public static final int FLAG_MULTI_PAGE_ANIMATION = 0x00000004;
 
     /**
+     * 标记此文件夹是否包含"+"icon
+     */
+    public static final int FLAG_INCLUDE_ADD_ICON = 0x00000008;
+
+    /**
      * Whether this folder has been opened
      */
     boolean opened;

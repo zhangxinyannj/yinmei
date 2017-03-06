@@ -769,6 +769,9 @@ public class LauncherModel extends BroadcastReceiver
     }
 
     static void checkItemInfo(final ItemInfo item) {
+        if (item instanceof TobeAddedIconInfo) {
+            return;
+        }
         final StackTraceElement[] stackTrace = new Throwable().getStackTrace();
         final long itemId = item.id;
         Runnable r = new Runnable() {
@@ -2172,6 +2175,7 @@ public class LauncherModel extends BroadcastReceiver
                                         sBgWorkspaceItems.add(info);
                                         break;
                                     default:
+                                        //文件夹icon的Load时机
                                         // Item is in a user folder
                                         FolderInfo folderInfo =
                                                 findOrMakeFolder(sBgFolders, container);
@@ -3124,10 +3128,11 @@ public class LauncherModel extends BroadcastReceiver
                         mBgAllAppsList.addPackage(context, packages[i], mUser);
                     }
 
-                    ManagedProfileHeuristic heuristic = ManagedProfileHeuristic.get(context, mUser);
-                    if (heuristic != null) {
-                        heuristic.processPackageAdd(mPackages);
-                    }
+                    //不考虑AppforWork
+//                    ManagedProfileHeuristic heuristic = ManagedProfileHeuristic.get(context, mUser);
+//                    if (heuristic != null) {
+//                        heuristic.processPackageAdd(mPackages);
+//                    }
                     break;
                 }
                 case OP_UPDATE:

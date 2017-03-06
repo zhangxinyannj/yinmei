@@ -264,4 +264,11 @@
     <string name="no_permission_hint">You need to allow access: </string>
     <string name="permission_call_phone">Call Phone</string>
     <string name="permission_access_external_storage">Access External Storage</string>
+
+
+
+    <!-- Tobe Added icon label -->
+    <string name="tobe_added_icon_label">Add</string>
+    <string name="friends_contacts_folder_label">Friends</string>
+    <string name="family_contacts_folder_label">Family</string>
 </resources>

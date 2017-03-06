@@ -370,8 +370,23 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
     void bind(FolderInfo info) {
         mInfo = info;
+
         ArrayList<ShortcutInfo> children = info.contents;
         Collections.sort(children, ITEM_POS_COMPARATOR);
+
+        if (mInfo.hasOption(FolderInfo.FLAG_INCLUDE_ADD_ICON)) {
+            //添加“+”到icon列表最后一个
+            int contentSize = info.contents.size();
+            TobeAddedIconInfo tobeAddedIconInfo = new TobeAddedIconInfo();
+            tobeAddedIconInfo.cellX = contentSize;
+            tobeAddedIconInfo.cellY = 0;
+            tobeAddedIconInfo.spanX = 1;
+            tobeAddedIconInfo.spanY = 1;
+            tobeAddedIconInfo.addType = TobeAddedIconInfo.ADD_TYPE_CONTACTS;
+            mInfo.contents.add(tobeAddedIconInfo);
+        }
+
+        android.util.Log.i("zxy","content size : "+ mInfo.contents.size() + "   foldername : "+ mInfo.title);
 
         ArrayList<ShortcutInfo> overflow = mContent.bindItems(children);
 
@@ -404,9 +419,9 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
         // In case any children didn't come across during loading, clean up the folder accordingly
         mFolderIcon.post(new Runnable() {
             public void run() {
-                if (getItemCount() <= 1) {
-                    replaceFolderWithFinalItem();
-                }
+//                if (getItemCount() <= 1) {
+//                    replaceFolderWithFinalItem();
+//                }
             }
         });
     }
@@ -1115,24 +1130,24 @@ public class Folder extends LinearLayout implements DragSource, View.OnClickList
 
                 View child = null;
                 // Move the item from the folder to the workspace, in the position of the folder
-                if (getItemCount() == 1) {
-                    ShortcutInfo finalItem = mInfo.contents.get(0);
-                    child = mLauncher.createShortcut(cellLayout, finalItem);
-                    LauncherModel.addOrMoveItemInDatabase(mLauncher, finalItem, mInfo.container,
-                            mInfo.screenId, mInfo.cellX, mInfo.cellY);
-                }
-                if (getItemCount() <= 1) {
-                    // Remove the folder
-                    LauncherModel.deleteItemFromDatabase(mLauncher, mInfo);
-                    if (cellLayout != null) {
-                        // b/12446428 -- sometimes the cell layout has already gone away?
-                        cellLayout.removeView(mFolderIcon);
-                    }
-                    if (mFolderIcon instanceof DropTarget) {
-                        mDragController.removeDropTarget((DropTarget) mFolderIcon);
-                    }
-                    mLauncher.removeFolder(mInfo);
-                }
+//                if (getItemCount() == 1) {
+//                    ShortcutInfo finalItem = mInfo.contents.get(0);
+//                    child = mLauncher.createShortcut(cellLayout, finalItem);
+//                    LauncherModel.addOrMoveItemInDatabase(mLauncher, finalItem, mInfo.container,
+//                            mInfo.screenId, mInfo.cellX, mInfo.cellY);
+//                }
+//                if (getItemCount() <= 1) {
+//                    // Remove the folder
+//                    LauncherModel.deleteItemFromDatabase(mLauncher, mInfo);
+//                    if (cellLayout != null) {
+//                        // b/12446428 -- sometimes the cell layout has already gone away?
+//                        cellLayout.removeView(mFolderIcon);
+//                    }
+//                    if (mFolderIcon instanceof DropTarget) {
+//                        mDragController.removeDropTarget((DropTarget) mFolderIcon);
+//                    }
+//                    mLauncher.removeFolder(mInfo);
+//                }
                 // We add the child after removing the folder to prevent both from existing at
                 // the same time in the CellLayout.  We need to add the new item with addInScreenFromBind()
                 // to ensure that hotseat items are placed correctly.

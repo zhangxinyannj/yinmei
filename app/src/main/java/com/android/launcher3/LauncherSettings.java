@@ -99,6 +99,7 @@ public class LauncherSettings {
          * <P>Type: BLOB</P>
          */
         public static final String ICON = "icon";
+
     }
 
     /**

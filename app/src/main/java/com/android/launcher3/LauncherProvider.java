@@ -388,6 +388,7 @@ public class LauncherProvider extends ContentProvider {
 
             final boolean usingExternallyProvidedLayout = loader != null;
             if (loader == null) {
+                // 从此处Load配置
                 loader = getDefaultLayoutParser();
             }
 

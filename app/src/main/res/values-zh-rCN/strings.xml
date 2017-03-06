@@ -102,4 +102,9 @@
     <string name="no_permission_hint">请先获取所需的权限：</string>
     <string name="permission_call_phone">打电话</string>
     <string name="permission_access_external_storage">接入外部存储</string>
+
+    <!-- Tobe Added icon label -->
+    <string name="tobe_added_icon_label">添加</string>
+    <string name="friends_contacts_folder_label">朋友</string>
+    <string name="family_contacts_folder_label">家人</string>
 </resources>

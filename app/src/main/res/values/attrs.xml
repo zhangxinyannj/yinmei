@@ -99,6 +99,7 @@
         <attr name="favTitle" format="reference" />
         <!-- 2017-02-21 MOD-S -->
         <attr name="uri" format="string" />
+        <attr name="includeAddIcon" format="string" />
     </declare-styleable>
 
     <declare-styleable name="Extra">

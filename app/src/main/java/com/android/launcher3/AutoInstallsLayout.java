@@ -132,6 +132,8 @@ public class AutoInstallsLayout {
     private static final String ATTR_ICON = "icon";
     private static final String ATTR_URL = "url";
 
+    private static final String ATTR_INCLUDE_ADDICON = "includeAddIcon";
+
     // Attrs for "Include"
     private static final String ATTR_WORKSPACE = "workspace";
 
@@ -563,12 +565,27 @@ public class AutoInstallsLayout {
             } else {
                 title = mContext.getResources().getString(R.string.folder_name);
             }
+            android.util.Log.i("zxy","title from parse : " + title);
+
+            String includeAddIconString = getAttributeValue(parser, ATTR_INCLUDE_ADDICON);
+            final int includeAddIcon;
+            if (includeAddIconString != null) {
+                includeAddIcon = Integer.parseInt(includeAddIconString);
+            } else {
+                includeAddIcon = 0;
+            }
+            android.util.Log.i("zxy","includeAddIcon from parse : " + includeAddIcon);
+
 
             mValues.put(Favorites.TITLE, title);
             mValues.put(Favorites.ITEM_TYPE, Favorites.ITEM_TYPE_FOLDER);
             mValues.put(Favorites.SPANX, 1);
             mValues.put(Favorites.SPANY, 1);
             mValues.put(Favorites._ID, mCallback.generateNewItemId());
+            //添加文件夹是否包含“+”标记
+            if (includeAddIcon == 1) {
+                mValues.put(Favorites.OPTIONS, FolderInfo.FLAG_INCLUDE_ADD_ICON);
+            }
             long folderId = mCallback.insertAndCheck(mDb, mValues);
             if (folderId < 0) {
                 if (LOGD) Log.e(TAG, "Unable to add folder");
@@ -592,6 +609,7 @@ public class AutoInstallsLayout {
 
                 TagParser tagParser = mFolderElements.get(parser.getName());
                 if (tagParser != null) {
+                    //读取文件夹里面的icon
                     final long id = tagParser.parseAndAdd(parser);
                     if (id >= 0) {
                         folderItems.add(id);
@@ -607,7 +625,12 @@ public class AutoInstallsLayout {
             // We can only have folders with >= 2 items, so we need to remove the
             // folder and clean up if less than 2 items were included, or some
             // failed to add, and less than 2 were actually added
-            if (folderItems.size() < 2) {
+            /*修改文件夹内icon数量需要>1的逻辑
+            如果文件夹包含"+"icon的，文件夹的icon
+             */
+            android.util.Log.i("zxy","fodlersize from parse : " + folderItems.size());
+
+            if (folderItems.size() < 2 && includeAddIcon == 0) {
                 // Delete the folder
                 Uri uri = Favorites.getContentUri(folderId);
                 SqlArguments args = new SqlArguments(uri, null, null);

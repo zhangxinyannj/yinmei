@@ -1571,6 +1571,9 @@ public class Launcher extends Activity
     public View createShortcut(ViewGroup parent, ShortcutInfo info) {
         BubbleTextView favorite = (BubbleTextView) mInflater.inflate(R.layout.app_icon,
                 parent, false);
+        //设置icon背景
+//        favorite.setBackgroundColor(0x55ff0000);
+//        favorite.setBackground(getDrawable(R.drawable.quantum_panel_bitmap));
         favorite.applyFromShortcutInfo(info, mIconCache);
         favorite.setCompoundDrawablePadding(mDeviceProfile.iconDrawablePaddingPx);
         favorite.setOnClickListener(this);
@@ -2571,7 +2574,9 @@ public class Launcher extends Activity
         }
 
         Object tag = v.getTag();
-        if (tag instanceof ShortcutInfo) {
+        android.util.Log.i("zxy","tag : " + tag);
+        if (tag instanceof TobeAddedIconInfo) {
+        } else if (tag instanceof ShortcutInfo) {
             onClickAppShortcut(v);
         } else if (tag instanceof FolderInfo) {
             if (v instanceof FolderIcon) {
@@ -3323,6 +3328,9 @@ public class Launcher extends Activity
 //                                longClickCellInfo.cellX,
 //                                longClickCellInfo.cellY));
                 final boolean isAllAppsButton = false;
+                if (itemUnderLongClick instanceof Folder) {
+                    android.util.Log.i("zxy","itemUnderLongClick is Folder");
+                }
                 if (!(itemUnderLongClick instanceof Folder || isAllAppsButton)) {
                     // User long pressed on an item
                     mWorkspace.startDrag(longClickCellInfo);
@@ -3837,6 +3845,52 @@ public class Launcher extends Activity
         CellLayout.LayoutParams toplp = new CellLayout.LayoutParams(0,0,2,1);
         toplp.canReorder = false;
         topBarContent.addViewToCellLayout(timeTopBar, -1, timeTopBar.getId(), toplp, true);
+
+
+    }
+
+    private void addToBeAddedIconInSceens() {
+        android.util.Log.i("zxy","addToBeAddedIconInScreend");
+        for (int screen = 0; screen < mWorkspace.getChildCount(); screen++) {
+            CellLayout cellLayout = (CellLayout) mWorkspace.getChildAt(screen);
+            addToBeAddedIconInScreen(cellLayout);
+        }
+    }
+
+    private void addToBeAddedIconInScreen(CellLayout cellLayout) {
+        int countX = (int) mDeviceProfile.inv.numColumns;
+        int countY = (int) mDeviceProfile.inv.numRows;
+
+        ShortcutAndWidgetContainer container = cellLayout.getShortcutsAndWidgets();
+        for (int y = 0; y < countY; y++) {
+            for (int x = 0; x < countX; x++) {
+                View child =  container.getChildAt(x, y);
+                android.util.Log.i("zxy","child : " + child);
+                if (child == null) {
+                    BubbleTextView tobeAddedIcon = (BubbleTextView) mInflater.inflate(R.layout.tobe_added_icon, cellLayout, false);
+                    Drawable d = getResources().getDrawable(R.drawable.tobe_added_icon);
+                    //d.setAlpha(100);
+                    resizeIconDrawable(d);
+                    tobeAddedIcon.setCompoundDrawables(null, d, null, null);
+                    tobeAddedIcon.setContentDescription(getString(R.string.tobe_added_icon_label));
+                    tobeAddedIcon.setText(R.string.tobe_added_icon_label);
+                    tobeAddedIcon.setAlpha(0.5f);
+                    tobeAddedIcon.setOnClickListener(this);
+
+                    TobeAddedIconInfo tobeAddedIconInfo = new TobeAddedIconInfo();
+                    tobeAddedIconInfo.cellX = x;
+                    tobeAddedIconInfo.cellY = y;
+                    tobeAddedIconInfo.spanX = 1;
+                    tobeAddedIconInfo.spanY = 1;
+                    tobeAddedIconInfo.addType = TobeAddedIconInfo.ADD_TYPE_MULTI;
+                    tobeAddedIcon.setTag(tobeAddedIconInfo);
+
+                    CellLayout.LayoutParams lp = new CellLayout.LayoutParams(x,y,1,1);
+                    lp.canReorder = false;
+                    cellLayout.addViewToCellLayout(tobeAddedIcon, -1, tobeAddedIcon.getId(), lp, true);
+                }
+            }
+        }
     }
 
     @Override
@@ -4014,6 +4068,12 @@ public class Launcher extends Activity
             }
         }
         workspace.requestLayout();
+
+        //在Workspace的空白区域添加“+”button
+//        int N = shortcuts.size();
+//        if (end == N) {
+//            addToBeAddedIconInSceens();
+//        }
     }
 
     /**
